@@ -1,0 +1,35 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: twitter-stream
+  labels:
+    name: twitter-stream
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: twitter-stream
+    spec:
+      containers:
+      - name: twitter-to-pubsub
+        image: gcr.io/myspringml2/nba-senti:v6
+        imagePullPolicy: Always
+        env:
+        - name: PROCESSINGSCRIPT
+          value: twitter-pubfor-dataflow
+        # Change this to your pubsub topic
+        - name: PUBSUB_TOPIC
+          value: projects/myspringml2/topics/nba_finals
+        # Change the following four settings to your twitter credentials
+        # information.
+        - name: CONSUMERKEY
+          value: <twitter-api-info>
+        - name: CONSUMERSECRET
+          value: <twitter-api-info>
+        - name: ACCESSTOKEN
+          value: <twitter-api-info>
+        - name: ACCESSTOKENSEC
+          value: <twitter-api-info>
+        - name: TWSTREAMMODE
+          value: filter

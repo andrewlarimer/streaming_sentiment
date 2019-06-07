@@ -1,0 +1,2 @@
+include vaderDF/lexicons/emoji_utf8_lexicon.txt
+include vaderDF/lexicons/vader_lexicon.txt

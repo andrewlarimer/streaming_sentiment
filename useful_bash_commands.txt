@@ -1,0 +1,27 @@
+
+
+# Bash commands to build a new docker after you've made changes
+docker build -t nba-senti:v7 .
+docker tag nba-senti:v7 gcr.io/myspringml2/nba-senti:v7
+gcloud docker -- push gcr.io/myspringml2/nba-senti:v7
+
+# Make sure at that point to update the container version in the .yaml files
+
+# To connect to the Kubernetes cluster, click the 'Connect' button
+# after its name in the Kubernetes > Clusters line item in Cloud Console
+# and copy the line of code it provides there
+
+# Then to run the deployments:
+
+kubectl create -f twitter-stream.yaml
+kubectl create -f bigquery-controller.yaml
+
+# And to delete them
+
+kubectl delete -f twitter-stream.yaml
+kubectl delete -f bigquery-controller.yaml
+
+# Finally, from an environment setup to run
+# Beam Dataflow jobs, to run the dataflow code use
+
+python nba_dataflow.py --setup_file setup/setup.py
